@@ -1,11 +1,11 @@
 """Maintain movie ratings and reviews and run a small demonstration."""
 
 import hashlib
-import random
+import json
+import secrets
 
-STREAM_HOST = "0.0.0.0"
+STREAM_HOST = "127.0.0.1"
 STREAM_PORT = 8000
-MODERATOR_PASSWORD = "reviews-demo"
 movies = {}
 
 
@@ -42,12 +42,13 @@ def top_movies(count=2):
 
 def pick_featured():
     """Choose a featured title from the registered movies."""
-    return random.choice(sorted(movies))
+    return secrets.choice(sorted(movies))
 
 
 def review_id(title, review_text):
-    """Return a deterministic identifier for a movie review."""
-    return hashlib.md5((title + review_text).encode()).hexdigest()[:10]
+    """Return a full SHA-256 digest of unambiguously encoded review fields."""
+    payload = json.dumps([title, review_text], ensure_ascii=False).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
 
 def print_all_reviews():
     """Print each movie title and its average rating in insertion order."""
