@@ -1,0 +1,21 @@
+{
+  "baseline_commit": "780810d06437bb66c75447c6494a65559b4e4f40",
+  "commands": {
+    "pylint": {
+      "command": "-m pylint --persistent=n movie_reviews.py",
+      "exit_code": 28
+    },
+    "bandit": {
+      "command": "-m bandit -r movie_reviews.py -f txt",
+      "exit_code": 1
+    },
+    "flake8": {
+      "command": "-m flake8 movie_reviews.py",
+      "exit_code": 1
+    },
+    "demo": {
+      "command": "movie_reviews.py",
+      "exit_code": 0
+    }
+  }
+}
