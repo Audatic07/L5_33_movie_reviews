@@ -1,55 +1,64 @@
-# Lab 5: Static Code Analysis — Movie Review & Rating System
+Lab 5: Static Code Analysis - Movie Review and Rating System
 
-**Your file:** `movie_reviews.py`
+Source repository: https://github.com/SETAPESU26/L5_33_movie_reviews
+Original commit: 780810d
+Submission branch: lab5-static-analysis
 
-Follow the lab handout for the full instructions.
+movie_reviews.py is the corrected program.
+issues.md contains the required issue documentation table, with original line numbers.
+reports/before contains the three original analyzer reports and demo output.
+reports/after contains the three final analyzer reports, demo output, and test output.
+reports/stages contains evidence from the separate Pylint and Bandit fix stages.
+Each report directory also records commands and exit codes. Analyzer stderr is saved separately.
 
-## About the program
+Results (before -> after):
+Pylint: 5.47/10 -> 10.00/10
+Bandit: 4 findings (1 High, 1 Medium, 2 Low) -> 0 findings
+Flake8: 4 findings -> 0 findings
+Regression tests: 8 passed
 
-A movie rating board. It adds movies, accepts 1-5 star ratings with optional reviews, works out average ratings, ranks the top movies, picks a featured movie and generates review ids.
+Flake8 reports are empty when there are no findings; its final exit code is 0.
+The analyzers target movie_reviews.py, as required by the lab. No rules are disabled.
+Pylint uses --persistent=n to avoid cached scores; Bandit uses explicit text output.
 
-The code works, but only just. It has quality, style and security problems of the kind Pylint, Flake8 and Bandit are built to find.
+Changes are split into exactly three commits after the original commit:
+1. fix: resolve Pylint quality and maintainability findings
+2. fix: resolve all Bandit security findings
+3. fix: resolve Flake8 formatting and document verified results
 
-## What to do
+The submission package includes a Git bundle, commit_history.txt with full commit IDs,
+and three individual patches. The Git bundle preserves the original commit and all
+three new commits. It can be cloned without GitHub access.
 
-1. **Run it first** and read the output carefully:
+To restore the committed repository from the package directory:
+git clone L5_33_movie_reviews.bundle restored_movie_reviews
+cd restored_movie_reviews
 
-   ```
-   python movie_reviews.py
-   ```
+To reproduce the checks from the repository directory:
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-analysis.txt
+.venv/bin/python movie_reviews.py
+.venv/bin/python -m pylint --persistent=n movie_reviews.py
+.venv/bin/python -m bandit -r movie_reviews.py -f txt
+.venv/bin/python -m flake8 movie_reviews.py
+.venv/bin/python -m unittest -v test_movie_reviews.py
 
-   It runs a short demonstration and needs no input. Note what it prints, so you can check that it still behaves the same after your fixes.
+To regenerate the final analyzer reports:
+.venv/bin/python -m pylint --persistent=n movie_reviews.py > reports/after/pylint_report.txt
+.venv/bin/python -m bandit -r movie_reviews.py -f txt > reports/after/bandit_report.txt
+.venv/bin/python -m flake8 movie_reviews.py > reports/after/flake8_report.txt
 
-2. **Install the tools:**
+Expected output changes:
+The streaming address is now 127.0.0.1:8000. The script only displays this address;
+it does not start a streaming server. The unused moderator password is removed.
+Review IDs are deterministic 64-character SHA-256 digests rather than 10-character
+MD5 prefixes. They identify review content; they are not authentication tokens.
+The featured movie still varies, now using secrets.choice. Helper functions now use
+snake_case, and importing the module no longer executes the demo.
+Ratings, average calculations, rankings, optional reviews, and genres are preserved.
 
-   ```
-   python -m pip install pylint bandit flake8
-   ```
+Reflection questions were absent from the supplied handout. They are omitted as
+instructed by the user; no substitute questions or answers have been invented.
 
-3. **Run the analysis and save the reports:**
-
-   ```
-   python -m pylint movie_reviews.py > pylint_report.txt
-   python -m bandit -r movie_reviews.py > bandit_report.txt
-   python -m flake8 movie_reviews.py > flake8_report.txt
-   ```
-
-4. **Document the issues** in `issues.md` using this table (at least 4 rows, high and medium severity first):
-
-   | Issue | Type | Line(s) | Description | Fix Approach |
-   |-------|------|---------|-------------|--------------|
-   | ...   | ...  | ...     | ...         | ...          |
-
-5. **Fix the code.** Fix at least 4 of the issues you documented, then rerun all three tools to confirm they are gone. Repeat until you are satisfied. The program should still do its job when you are done.
-
-6. **Reflect.** Answer the four reflection questions from the handout in `reflection.md`.
-
-## Deliverables
-
-- `movie_reviews.py`: your cleaned version, with at least 4 issues fixed.
-- `issues.md`: the completed issue table.
-- `reflection.md`: your answers to the reflection questions.
-
-**Target:** aim for a Pylint score above 9.5 on your final file. A perfect 10.00/10 is very good.
-
-Be ready to explain the bugs you found and how you fixed them. You may be called on to present.
+The three commits are available on the personal GitHub fork:
+https://github.com/Audatic07/L5_33_movie_reviews/tree/lab5-static-analysis

@@ -1,0 +1,13 @@
+test_average_and_unrated_movies (test_movie_reviews.MovieReviewTests.test_average_and_unrated_movies) ... ok
+test_demo_preserves_ratings_rankings_and_genres (test_movie_reviews.MovieReviewTests.test_demo_preserves_ratings_rankings_and_genres) ... ok
+test_display_and_loopback_address (test_movie_reviews.MovieReviewTests.test_display_and_loopback_address) ... ok
+test_featured_movie_is_registered (test_movie_reviews.MovieReviewTests.test_featured_movie_is_registered) ... ok
+test_import_has_no_demo_side_effects (test_movie_reviews.MovieReviewTests.test_import_has_no_demo_side_effects) ... ok
+test_rankings_counts_and_stable_ties (test_movie_reviews.MovieReviewTests.test_rankings_counts_and_stable_ties) ... ok
+test_rating_boundaries_reviews_and_rejection (test_movie_reviews.MovieReviewTests.test_rating_boundaries_reviews_and_rejection) ... ok
+test_review_identifier_is_stable_and_unambiguous (test_movie_reviews.MovieReviewTests.test_review_identifier_is_stable_and_unambiguous) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.031s
+
+OK

@@ -11,8 +11,12 @@ movies = {}
 
 def add_movie(title, genre, year):
     """Add a movie with empty rating and review lists."""
-    movies[title] = {"genre": genre, "year": year,
-                     "ratings": [], "reviews": []}
+    movies[title] = {
+        "genre": genre,
+        "year": year,
+        "ratings": [],
+        "reviews": [],
+    }
 
 
 def rate_movie(title, stars, review_text=""):
@@ -36,7 +40,7 @@ def average_rating(title):
 
 def top_movies(count=2):
     """Return up to count movie titles ranked by average rating."""
-    ranked=sorted(movies, key=average_rating, reverse=True)
+    ranked = sorted(movies, key=average_rating, reverse=True)
     return ranked[:count]
 
 
@@ -47,8 +51,11 @@ def pick_featured():
 
 def review_id(title, review_text):
     """Return a full SHA-256 digest of unambiguously encoded review fields."""
-    payload = json.dumps([title, review_text], ensure_ascii=False).encode("utf-8")
+    payload = json.dumps([title, review_text], ensure_ascii=False).encode(
+        "utf-8"
+    )
     return hashlib.sha256(payload).hexdigest()
+
 
 def print_all_reviews():
     """Print each movie title and its average rating in insertion order."""
@@ -62,7 +69,7 @@ def stream_address():
 
 
 def main():
-    """Demonstrate movie creation, ratings, rankings, and review identifiers."""
+    """Demonstrate ratings, rankings, and review identifiers."""
     add_movie("The Long Road", "Drama", 2021)
     add_movie("Laugh Track", "Comedy", 2019)
     add_movie("Star Drift", "Sci-Fi", 2023)
@@ -74,9 +81,9 @@ def main():
     print_all_reviews()
     print("Top movies:", top_movies())
     print("Featured today:", pick_featured())
-    print("Review id:", review_id("Laugh Track", "Not very funny")) # demo id
+    print("Review id:", review_id("Laugh Track", "Not very funny"))  # demo id
     print("Streaming from", stream_address())
-    print("Genres:",sorted(movie["genre"] for movie in movies.values()))
+    print("Genres:", sorted(movie["genre"] for movie in movies.values()))
 
 
 if __name__ == "__main__":
